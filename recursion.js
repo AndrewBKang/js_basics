@@ -1,3 +1,5 @@
+var US = require('./underscore.js');
+
 var range = function(min, max){
   if(min === max){
     return [min]
@@ -150,23 +152,14 @@ var mergeSort = function(input){
 
 var subsets = function(array){
   if (array.length === 0){
-    return array
+    return [[]]
   } else {
-    var results = [];
-    for(var i = 0; i < array.length; i++){
-      var left = array.clone().splice(0,i);
-      var right = array.clone().splice(i+1,array.length);
-
-      var subarray = left.concat(right);
-
-      if (subarray.length > 0){
-        results.push(subarray);
-        results = results.concat(subsets(subarray));
-      }
-    }
-    return results
+    var val = array[0];
+    var subs = subsets(US.rest(array.clone()))
+    var newsubs = subs.map(function(num){return [val].concat(num);} )
+    return subs.concat(newsubs)
   }
-}
+};
 
 
 console.log(subsets([1,25,2]))
